@@ -63,18 +63,7 @@ kids_buy_list = { 'Halle': ( 'Tyler', 'Gavin', 'Andrew' ),
                   'Katelyn': ( 'Sarah' ),
                   'Sarah': ( 'Katelyn' ) }
 
-kids_buy_list_null = { 'Halle': ( 'Gavin', 'Tyler' ),
-                       'Tyler': ( 'Halle' ),
-                       'Gavin': ( 'Andrew' ),
-                       'Andrew': ( 'Tyler' ),
-                       'Erica': ( 'Kayla' ),
-                       'Kayla': ( 'Erica' ),
-                       'Michael': ( 'Matthew' ),
-                       'Matthew': ( 'Michael' ),
-                       'Katelyn': ( 'Sarah' ),
-                       'Sarah': ( 'Katelyn' ) }
-
-def check_if_buy_ok(person, buyfor, plist=kids_buy_list_null):
+def check_if_buy_ok(person, buyfor, plist=kids_buy_list):
     # Pull out the name
     if not person in plist:
         sys.stderr.write('Warning, %s not in list\n' + person)
@@ -114,11 +103,14 @@ kids_result_dict = { }
 # How man times to loop?
 loopcount = len(name_map) - 1
 kidsloopcount = len(kids_name_map) - 1
+# Detect a failing loop
+failloop = 100
 
 while loopcount >= 0:
     rnum = random.randint(0, 1000000)
     lname = name_map[loopcount]
     while True:
+        failloop = failloop - 1
         # Get a random name
         randname = find_random_name(name_map[loopcount], name_map)
         # Check if it's ok to buy for this person
@@ -127,7 +119,8 @@ while loopcount >= 0:
             if not check_name_in_dict(result_dict, randname):
                 break
             # Check if we need to start over
-            if loopcount == 0:
+            if loopcount == 0 or failloop <= 0:
+                failloop = 100
                 # Reset things and start over
                 setup_random
                 loopcount = len(name_map) - 1
@@ -144,6 +137,7 @@ while kidsloopcount >= 0:
     rnum = random.randint(0, 1000000)
     lname = kids_name_map[kidsloopcount]
     while True:
+        failloop = failloop - 1
         # Get a random name
         randname = find_random_name(kids_name_map[kidsloopcount], kids_name_map)
         # Check if it's ok to buy for this person
@@ -152,7 +146,8 @@ while kidsloopcount >= 0:
             if not check_name_in_dict(kids_result_dict, randname):
                 break
             # Check if we need to start over
-            if kidsloopcount == 0:
+            if kidsloopcount == 0 or failloop <= 0:
+                failloop = 100
                 # Reset things and start over
                 setup_random
                 kidsloopcount = len(kids_name_map) - 1
