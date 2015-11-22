@@ -14,58 +14,59 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-# @author: Kyle Mestery
 #
 
 # vim: tabstop=4 shiftwidth=4 softtabstop=4
 #
 
-import sys
 import random
+import six
+import sys
 
-name_map = { 0: 'Kyle',
-             1: 'Sue',
-             2: 'Al',
-             3: 'Susan',
-             4: 'Joe',
-             5: 'Kim',
-             6: 'John',
-             7: 'Natalie' }
+name_map = {0: 'Kyle',
+            1: 'Sue',
+            2: 'Al',
+            3: 'Susan',
+            4: 'Joe',
+            5: 'Kim',
+            6: 'John',
+            7: 'Natalie'}
 
-buy_list = { 'Kyle': ( 'Sue' ),
-             'Sue': ( 'Kyle' ),
-             'Al': ( 'Susan' ),
-             'Susan': ( 'Al' ),
-             'Joe': ( 'Kim' ),
-             'Kim': ( 'Joe' ),
-             'John': ( 'Natalie' ),
-             'Natalie': ( 'John' ) }
+buy_list = {'Kyle': ('Sue'),
+            'Sue': ('Kyle'),
+            'Al': ('Susan'),
+            'Susan': ('Al'),
+            'Joe': ('Kim'),
+            'Kim': ('Joe'),
+            'John': ('Natalie'),
+            'Natalie': ('John')}
 
-kids_name_map = { 0: 'Halle',
-                  1: 'Tyler',
-                  2: 'Gavin',
-                  3: 'Andrew',
-                  4: 'Erica',
-                  5: 'Kayla',
-                  6: 'Michael',
-                  7: 'Matthew',
-                  8: 'Katelyn',
-                  9: 'Sarah' }
+kids_name_map = {0: 'Halle',
+                 1: 'Tyler',
+                 2: 'Gavin',
+                 3: 'Andrew',
+                 4: 'Erica',
+                 5: 'Kayla',
+                 6: 'Michael',
+                 7: 'Matthew',
+                 8: 'Katelyn',
+                 9: 'Sarah'}
 
-kids_buy_list = { 'Halle': ( 'Tyler', 'Gavin', 'Andrew' ),
-                  'Tyler': ( 'Halle', 'Gavin', 'Andrew' ),
-                  'Gavin': ( 'Halle', 'Tyler', 'Andrew' ),
-                  'Andrew': ( 'Halle', 'Tyler', 'Gavin' ),
-                  'Erica': ( 'Kayla' ),
-                  'Kayla': ( 'Erica' ),
-                  'Michael': ( 'Matthew' ),
-                  'Matthew': ( 'Michael' ),
-                  'Katelyn': ( 'Sarah' ),
-                  'Sarah': ( 'Katelyn' ) }
+kids_buy_list = {'Halle': ('Tyler', 'Gavin', 'Andrew'),
+                 'Tyler': ('Halle', 'Gavin', 'Andrew'),
+                 'Gavin': ('Halle', 'Tyler', 'Andrew'),
+                 'Andrew': ('Halle', 'Tyler', 'Gavin'),
+                 'Erica': ('Kayla'),
+                 'Kayla': ('Erica'),
+                 'Michael': ('Matthew'),
+                 'Matthew': ('Michael'),
+                 'Katelyn': ('Sarah'),
+                 'Sarah': ('Katelyn')}
+
 
 def check_if_buy_ok(person, buyfor, plist=kids_buy_list):
     # Pull out the name
-    if not person in plist:
+    if person not in plist:
         sys.stderr.write('Warning, %s not in list\n' + person)
 
     skip = plist[person]
@@ -73,6 +74,7 @@ def check_if_buy_ok(person, buyfor, plist=kids_buy_list):
         return False
     else:
         return True
+
 
 def find_random_name(person1, nmap):
     rand = random.randint(0, 1000000)
@@ -82,11 +84,13 @@ def find_random_name(person1, nmap):
         randname = nmap[rand % len(nmap)]
     return randname
 
+
 def setup_random(x):
     if not x:
         random.seed(None)
     else:
         random.seed(x)
+
 
 def check_name_in_dict(named, name):
     for key in named:
@@ -98,8 +102,8 @@ def check_name_in_dict(named, name):
 setup_random
 
 # Our return dictionary
-result_dict = { }
-kids_result_dict = { }
+result_dict = {}
+kids_result_dict = {}
 # How man times to loop?
 loopcount = len(name_map) - 1
 kidsloopcount = len(kids_name_map) - 1
@@ -129,9 +133,9 @@ while loopcount >= 0:
     result_dict[name_map[loopcount]] = randname
     loopcount = loopcount - 1
 
-print '=== Adult Output list ==='
-for key, value in result_dict.iteritems():
-    print key, "will buy for", value
+print('=== Adult Output list ===')
+for key, value in six.iteritems(result_dict):
+    print(key, "will buy for", value)
 
 while kidsloopcount >= 0:
     rnum = random.randint(0, 1000000)
@@ -139,7 +143,8 @@ while kidsloopcount >= 0:
     while True:
         failloop = failloop - 1
         # Get a random name
-        randname = find_random_name(kids_name_map[kidsloopcount], kids_name_map)
+        randname = find_random_name(kids_name_map[kidsloopcount],
+                                    kids_name_map)
         # Check if it's ok to buy for this person
         if check_if_buy_ok(kids_name_map[kidsloopcount], randname):
             # Check if we've already bought for this person
@@ -156,6 +161,6 @@ while kidsloopcount >= 0:
     kids_result_dict[kids_name_map[kidsloopcount]] = randname
     kidsloopcount = kidsloopcount - 1
 
-print '=== Kids Output list ==='
-for key, value in kids_result_dict.iteritems():
-    print key, "will buy for", value
+print('=== Kids Output list ===')
+for key, value in six.iterites(kids_result_dict):
+    print(key, "will buy for", value)
