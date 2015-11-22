@@ -135,7 +135,7 @@ while loopcount >= 0:
 
 print('=== Adult Output list ===')
 for key, value in six.iteritems(result_dict):
-    print(key, "will buy for", value)
+    print("%s will buy for %s" % (key, value))
 
 while kidsloopcount >= 0:
     rnum = random.randint(0, 1000000)
@@ -161,6 +161,7 @@ while kidsloopcount >= 0:
     kids_result_dict[kids_name_map[kidsloopcount]] = randname
     kidsloopcount = kidsloopcount - 1
 
+print('\n')
 print('=== Kids Output list ===')
-for key, value in six.iterites(kids_result_dict):
-    print(key, "will buy for", value)
+for key, value in six.iteritems(kids_result_dict):
+    print("%s will buy for %s" % (key, value))
