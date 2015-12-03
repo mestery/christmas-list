@@ -30,7 +30,9 @@ name_map = {0: 'Kyle',
             4: 'Joe',
             5: 'Kim',
             6: 'John',
-            7: 'Natalie'}
+            7: 'Natalie',
+            8: 'Ron',
+            9: 'Fran'}
 
 buy_list = {'Kyle': ('Sue'),
             'Sue': ('Kyle'),
@@ -39,7 +41,9 @@ buy_list = {'Kyle': ('Sue'),
             'Joe': ('Kim'),
             'Kim': ('Joe'),
             'John': ('Natalie'),
-            'Natalie': ('John')}
+            'Natalie': ('John'),
+            'Ron': ('Fran'),
+            'Fran': ('Ron')}
 
 kids_name_map = {0: 'Halle',
                  1: 'Tyler',
